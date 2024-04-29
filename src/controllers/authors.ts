@@ -14,8 +14,6 @@ export const getAuthors: RequestHandler = async (req, res, next) => {
 
 		res.status(200).json({ message: "success", authors });
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
@@ -35,8 +33,6 @@ export const postAuthor: RequestHandler = async (req, res, next) => {
 			author: createdAuthorDoc,
 		});
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
@@ -53,8 +49,6 @@ export const getAuthor: RequestHandler = async (req, res, next) => {
 		if (!authorDoc) return next();
 		res.status(200).json({ message: "author fetched", author: authorDoc });
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
@@ -68,16 +62,12 @@ export const putAuthor: RequestHandler = async (req, res, next) => {
 		const authorValidator = new AuthorValidator();
 		const authorService = new AuthorService(authorValidator);
 
-		const result = await authorService.updateAuthor(authorId, authorProps);
-		console.log(result);
+		await authorService.updateAuthor(authorId, authorProps);
 
-		// if (!authorDoc) return next();
 		res.status(200).json({
 			message: "authoer updated",
 		});
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
@@ -94,8 +84,6 @@ export const deleteAuthor: RequestHandler = async (req, res, next) => {
 		if (result === 0) return next();
 		res.status(200).json({ message: "author deleted" });
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
