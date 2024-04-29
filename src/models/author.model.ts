@@ -58,7 +58,7 @@ export class Author
 		if (firstName) whereClause.firstName = firstName;
 		if (lastName) whereClause.lastName = lastName;
 
-		return this.findOne({ where: whereClause });
+		return this.findOne({ where: whereClause, include: ["books"] });
 	}
 
 	static updateAuthor(

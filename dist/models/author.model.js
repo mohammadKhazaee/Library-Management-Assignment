@@ -23,7 +23,7 @@ class Author extends core_1.Model {
             whereClause.firstName = firstName;
         if (lastName)
             whereClause.lastName = lastName;
-        return this.findOne({ where: whereClause });
+        return this.findOne({ where: whereClause, include: ["books"] });
     }
     static updateAuthor(authorId, { firstName, lastName }) {
         const updateFields = {};
