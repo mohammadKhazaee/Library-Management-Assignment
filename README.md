@@ -2,7 +2,7 @@
     <h1><b>Library Management Assignment</b></h1>
 </div>
 
-_A RESTful API build by using NestJS framework._
+_A RESTful API built using Express.js framework._
 
 ### Link to Documentation: [here](https://documenter.getpostman.com/view/28833074/2sA3BuW95e)
 
