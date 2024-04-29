@@ -15,8 +15,8 @@ import {
 } from "@sequelize/core/decorators-legacy";
 
 import { Book } from "./book.model";
-import { IAuthorCreation } from "../interfaces/author.interface";
-import { authorUpdateProps, findFilters } from "../types/author.type";
+import { IAuthorCreation } from "../shared/interfaces/author.interface";
+import { authorUpdateProps, findFilters } from "../shared/types/author.type";
 
 export class Author
 	extends Model<InferAttributes<Author>, InferCreationAttributes<Author>>
@@ -75,5 +75,19 @@ export class Author
 				authorId,
 			},
 		});
+	}
+
+	static async exists({
+		authorId,
+		firstName,
+		lastName,
+	}: findFilters): Promise<boolean> {
+		const whereClause: findFilters = {};
+
+		if (authorId) whereClause.authorId = authorId;
+		if (firstName) whereClause.firstName = firstName;
+		if (lastName) whereClause.lastName = lastName;
+
+		return (await this.count({ where: whereClause })) > 0;
 	}
 }

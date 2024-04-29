@@ -11,7 +11,7 @@ import {
 	AutoIncrement,
 	NotNull,
 } from "@sequelize/core/decorators-legacy";
-import IBook from "../interfaces/book.interface";
+import IBook from "../shared/interfaces/book.interface";
 
 export class Book
 	extends Model<InferAttributes<Book>, InferCreationAttributes<Book>>

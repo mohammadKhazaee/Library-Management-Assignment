@@ -1,53 +1,63 @@
-import { RequestHandler } from "express-serve-static-core";
-import { IAuthorCreation } from "../interfaces/author.interface";
+import { IAuthorCreation } from "../shared/interfaces/author.interface";
 import { Author } from "../models/author.model";
-import { authorUpdateProps } from "../types/author.type";
+import { authorUpdateProps } from "../shared/types/author.type";
+import BaseValidator from "../shared/utils/validators/baseValidator";
 
 //import module
-class postService {
+export default class AuthorService {
+	constructor(
+		private validatorClass: BaseValidator<
+			IAuthorCreation,
+			authorUpdateProps
+		> // private model:
+	) {}
+
 	getAuthors = async () => {
 		try {
-			// validationd here
 			return Author.fetchAll();
 		} catch (err) {
-			console.log(err);
+			throw err;
 		}
 	};
 
 	createAuthor = async (authorProps: IAuthorCreation) => {
 		try {
-			// zod validation
+			this.validatorClass.validateCreate(authorProps);
 
 			return await Author.create(authorProps);
 		} catch (err) {
-			console.log(err);
+			throw err;
 		}
 	};
 
 	getAuthor = async (authorId: string) => {
 		try {
+			this.validatorClass.validateId(authorId);
+
 			return await Author.fetchOne({ authorId });
 		} catch (err) {
-			console.log(err);
+			throw err;
 		}
 	};
 
 	updateAuthor = async (authorId: string, authorProps: authorUpdateProps) => {
 		try {
-			await Author.updateAuthor(authorId, authorProps);
+			this.validatorClass.validateUpdate(authorProps);
+			this.validatorClass.validateId(authorId);
+
+			return await Author.updateAuthor(authorId, authorProps);
 		} catch (err) {
-			console.log(err);
+			throw err;
 		}
 	};
 
 	deleteAuthor = async (authorId: string) => {
 		try {
-			await Author.deleteAuthor(authorId);
+			await this.validatorClass.validateId(authorId);
+
+			return await Author.deleteAuthor(authorId);
 		} catch (err) {
-			console.log(err);
+			throw err;
 		}
 	};
 }
-
-//export the class
-export default new postService();

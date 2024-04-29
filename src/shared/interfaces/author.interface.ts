@@ -1,4 +1,4 @@
-import { Book } from "../models/book.model";
+import { Book } from "../../models/book.model";
 
 export interface IAuthorCreation {
 	firstName: string;

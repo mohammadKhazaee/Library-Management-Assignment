@@ -1,7 +1,7 @@
 import { Sequelize, importModels } from "@sequelize/core";
 import { MySqlDialect } from "@sequelize/mysql";
-import { Author } from "../models/author.model";
-import { Book } from "../models/book.model";
+import { Author } from "../../models/author.model";
+import { Book } from "../../models/book.model";
 
 const sequelize = new Sequelize({
 	dialect: MySqlDialect,

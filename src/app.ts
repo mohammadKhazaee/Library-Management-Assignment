@@ -5,7 +5,7 @@ import compression from "compression";
 import "dotenv/config";
 
 import routes from "./routes/routes";
-import sequelize from "./utils/database";
+import sequelize from "./shared/utils/database";
 
 const app = express();
 

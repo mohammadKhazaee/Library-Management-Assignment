@@ -44,6 +44,16 @@ class Author extends core_1.Model {
             },
         });
     }
+    static async exists({ authorId, firstName, lastName, }) {
+        const whereClause = {};
+        if (authorId)
+            whereClause.authorId = authorId;
+        if (firstName)
+            whereClause.firstName = firstName;
+        if (lastName)
+            whereClause.lastName = lastName;
+        return (await this.count({ where: whereClause })) > 0;
+    }
 }
 exports.Author = Author;
 __decorate([

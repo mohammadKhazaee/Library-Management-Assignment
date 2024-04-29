@@ -9,7 +9,7 @@ const helmet_1 = __importDefault(require("helmet"));
 const compression_1 = __importDefault(require("compression"));
 require("dotenv/config");
 const routes_1 = __importDefault(require("./routes/routes"));
-const database_1 = __importDefault(require("./utils/database"));
+const database_1 = __importDefault(require("./shared/utils/database"));
 const app = (0, express_1.default)();
 app.use((0, helmet_1.default)());
 app.use((0, compression_1.default)());

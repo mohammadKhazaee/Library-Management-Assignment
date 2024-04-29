@@ -18,6 +18,6 @@ router.use((err, req, res, next) => {
     // 	console.log(err);
     // 	return res.status(status).json({ message: "something went wrong" });
     // }
-    // res.status(status).json({ message: err.message });
+    res.status(500).json({ message: err.message });
 });
 exports.default = router;
