@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { getAuthors } from "../controllers/authors";
+import {
+	deleteAuthor,
+	getAuthor,
+	getAuthors,
+	postAuthor,
+	putAuthor,
+} from "../controllers/authors";
 
 const router = Router();
 
@@ -7,15 +13,15 @@ const router = Router();
 router.get("/", getAuthors);
 
 // POST /authors
-router.post("/");
+router.post("/", postAuthor);
 
 // GET /authors/:id
-router.get("/:id");
+router.get("/:id", getAuthor);
 
 // PUT /authors/:id
-router.put("/:id");
+router.put("/:id", putAuthor);
 
 // DELETE /authors/:id
-router.delete("/:id");
+router.delete("/:id", deleteAuthor);
 
 export default router;

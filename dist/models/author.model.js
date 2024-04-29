@@ -11,6 +11,39 @@ const core_1 = require("@sequelize/core");
 const decorators_legacy_1 = require("@sequelize/core/decorators-legacy");
 const book_model_1 = require("./book.model");
 class Author extends core_1.Model {
+    // model methods
+    static fetchAll() {
+        return this.findAll();
+    }
+    static fetchOne({ authorId, firstName, lastName }) {
+        const whereClause = {};
+        if (authorId)
+            whereClause.authorId = authorId;
+        if (firstName)
+            whereClause.firstName = firstName;
+        if (lastName)
+            whereClause.lastName = lastName;
+        return this.findOne({ where: whereClause });
+    }
+    static updateAuthor(authorId, { firstName, lastName }) {
+        const updateFields = {};
+        if (firstName)
+            updateFields.firstName = firstName;
+        if (lastName)
+            updateFields.lastName = lastName;
+        return this.update(updateFields, {
+            where: {
+                authorId,
+            },
+        });
+    }
+    static deleteAuthor(authorId) {
+        return this.destroy({
+            where: {
+                authorId,
+            },
+        });
+    }
 }
 exports.Author = Author;
 __decorate([
