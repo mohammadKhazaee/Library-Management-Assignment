@@ -4,22 +4,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const zod_validation_error_1 = require("zod-validation-error");
-const author_type_1 = require("../../types/author.type");
+const book_type_1 = require("../../types/book.type");
 const baseValidator_1 = __importDefault(require("./baseValidator"));
+const book_model_1 = require("../../../models/book.model");
 const author_model_1 = require("../../../models/author.model");
-class AuthorValidator extends baseValidator_1.default {
+class BookValidator extends baseValidator_1.default {
     constructor() {
         super();
     }
-    async validateCreate(authorProps) {
-        const result = author_type_1.authorCreateSchema.safeParse(authorProps);
+    async validateCreate(bookProps) {
+        const result = book_type_1.bookCreateSchema.safeParse(bookProps);
         if (!result.success) {
             const err = new Error((0, zod_validation_error_1.fromZodError)(result.error).message);
             throw err;
         }
+        const exists = await author_model_1.Author.exists({
+            authorId: bookProps.authorId.toString(),
+        });
+        if (!exists) {
+            const err = new Error("authorId doesnt exists in the library");
+            throw err;
+        }
     }
     validateUpdate(updateProps) {
-        const result = author_type_1.authorUpdateSchema.safeParse(updateProps);
+        const result = book_type_1.bookUpdateSchema.safeParse(updateProps);
         if (!result.success) {
             const err = new Error((0, zod_validation_error_1.fromZodError)(result.error).message);
             throw err;
@@ -27,11 +35,11 @@ class AuthorValidator extends baseValidator_1.default {
     }
     async validateId(id) {
         super.validateId(id);
-        const exists = await author_model_1.Author.exists({ authorId: id });
+        const exists = await book_model_1.Book.exists({ bookId: id });
         if (!exists) {
-            const err = new Error("authorId doesnt exists in the library");
+            const err = new Error("bookId doesnt exists in the library");
             throw err;
         }
     }
 }
-exports.default = AuthorValidator;
+exports.default = BookValidator;

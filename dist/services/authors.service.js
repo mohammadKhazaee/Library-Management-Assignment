@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const author_model_1 = require("../models/author.model");
 //import module
 class AuthorService {
-    constructor(validatorClass // private model:
-    ) {
+    constructor(validatorClass) {
         this.validatorClass = validatorClass;
         this.getAuthors = async () => {
             try {
@@ -16,7 +15,7 @@ class AuthorService {
         };
         this.createAuthor = async (authorProps) => {
             try {
-                this.validatorClass.validateCreate(authorProps);
+                await this.validatorClass.validateCreate(authorProps);
                 return await author_model_1.Author.create(authorProps);
             }
             catch (err) {
@@ -25,7 +24,7 @@ class AuthorService {
         };
         this.getAuthor = async (authorId) => {
             try {
-                this.validatorClass.validateId(authorId);
+                await this.validatorClass.validateId(authorId);
                 return await author_model_1.Author.fetchOne({ authorId });
             }
             catch (err) {
@@ -35,7 +34,7 @@ class AuthorService {
         this.updateAuthor = async (authorId, authorProps) => {
             try {
                 this.validatorClass.validateUpdate(authorProps);
-                this.validatorClass.validateId(authorId);
+                await this.validatorClass.validateId(authorId);
                 return await author_model_1.Author.updateAuthor(authorId, authorProps);
             }
             catch (err) {

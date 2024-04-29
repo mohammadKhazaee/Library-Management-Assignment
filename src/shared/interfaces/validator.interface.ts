@@ -1,5 +1,3 @@
-import { findFilters } from "../types/author.type";
-
 export interface createValidator<T> {
 	validateCreate(createProps: T): void | never;
 }

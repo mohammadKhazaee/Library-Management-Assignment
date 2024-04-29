@@ -70,5 +70,10 @@ __decorate([
     decorators_legacy_1.NotNull
 ], Author.prototype, "lastName", void 0);
 __decorate([
-    (0, decorators_legacy_1.HasMany)(() => book_model_1.Book, "authorId")
+    (0, decorators_legacy_1.HasMany)(() => book_model_1.Book, {
+        foreignKey: {
+            name: "authorId",
+            onDelete: "CASCADE",
+        },
+    })
 ], Author.prototype, "books", void 0);

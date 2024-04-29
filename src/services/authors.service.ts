@@ -9,7 +9,7 @@ export default class AuthorService {
 		private validatorClass: BaseValidator<
 			IAuthorCreation,
 			authorUpdateProps
-		> // private model:
+		>
 	) {}
 
 	getAuthors = async () => {
@@ -22,7 +22,7 @@ export default class AuthorService {
 
 	createAuthor = async (authorProps: IAuthorCreation) => {
 		try {
-			this.validatorClass.validateCreate(authorProps);
+			await this.validatorClass.validateCreate(authorProps);
 
 			return await Author.create(authorProps);
 		} catch (err) {
@@ -32,7 +32,7 @@ export default class AuthorService {
 
 	getAuthor = async (authorId: string) => {
 		try {
-			this.validatorClass.validateId(authorId);
+			await this.validatorClass.validateId(authorId);
 
 			return await Author.fetchOne({ authorId });
 		} catch (err) {
@@ -43,7 +43,7 @@ export default class AuthorService {
 	updateAuthor = async (authorId: string, authorProps: authorUpdateProps) => {
 		try {
 			this.validatorClass.validateUpdate(authorProps);
-			this.validatorClass.validateId(authorId);
+			await this.validatorClass.validateId(authorId);
 
 			return await Author.updateAuthor(authorId, authorProps);
 		} catch (err) {

@@ -18,6 +18,6 @@ export default abstract class BaseValidator<C, U>
 		}
 	}
 
-	abstract validateCreate(createProps: C): void | never;
+	async validateCreate(createProps: C): Promise<void | never> {}
 	abstract validateUpdate(updateProps: U): void | never;
 }

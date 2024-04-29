@@ -16,7 +16,10 @@ import {
 
 import { Book } from "./book.model";
 import { IAuthorCreation } from "../shared/interfaces/author.interface";
-import { authorUpdateProps, findFilters } from "../shared/types/author.type";
+import {
+	authorUpdateProps,
+	findAuthorFilters,
+} from "../shared/types/author.type";
 
 export class Author
 	extends Model<InferAttributes<Author>, InferCreationAttributes<Author>>
@@ -35,7 +38,12 @@ export class Author
 	@NotNull
 	declare lastName: string;
 
-	@HasMany(() => Book, "authorId")
+	@HasMany(() => Book, {
+		foreignKey: {
+			name: "authorId",
+			onDelete: "CASCADE",
+		},
+	})
 	declare books?: NonAttribute<Book[]>;
 
 	// model methods
@@ -43,8 +51,8 @@ export class Author
 		return this.findAll();
 	}
 
-	static fetchOne({ authorId, firstName, lastName }: findFilters) {
-		const whereClause: findFilters = {};
+	static fetchOne({ authorId, firstName, lastName }: findAuthorFilters) {
+		const whereClause: findAuthorFilters = {};
 
 		if (authorId) whereClause.authorId = authorId;
 		if (firstName) whereClause.firstName = firstName;
@@ -81,8 +89,8 @@ export class Author
 		authorId,
 		firstName,
 		lastName,
-	}: findFilters): Promise<boolean> {
-		const whereClause: findFilters = {};
+	}: findAuthorFilters): Promise<boolean> {
+		const whereClause: findAuthorFilters = {};
 
 		if (authorId) whereClause.authorId = authorId;
 		if (firstName) whereClause.firstName = firstName;

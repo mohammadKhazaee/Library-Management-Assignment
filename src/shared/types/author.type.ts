@@ -15,6 +15,6 @@ export const authorUpdateSchema = z.object({
 
 export type authorUpdateProps = z.infer<typeof authorUpdateSchema>;
 
-export type findFilters = authorUpdateProps & {
+export type findAuthorFilters = authorUpdateProps & {
 	authorId?: string;
 };

@@ -11,7 +11,7 @@ class AuthorValidator extends baseValidator_1.default {
     constructor() {
         super();
     }
-    async validateCreate(authorProps) {
+    validateCreate(authorProps) {
         const result = author_type_1.authorCreateSchema.safeParse(authorProps);
         if (!result.success) {
             const err = new Error((0, zod_validation_error_1.fromZodError)(result.error).message);
@@ -29,7 +29,7 @@ class AuthorValidator extends baseValidator_1.default {
         super.validateId(id);
         const exists = await author_model_1.Author.exists({ authorId: id });
         if (!exists) {
-            const err = new Error("authorId doesnt exists in the library");
+            const err = new Error("id doesnt exists in the library");
             throw err;
         }
     }

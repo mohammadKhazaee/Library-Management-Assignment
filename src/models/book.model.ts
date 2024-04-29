@@ -11,11 +11,12 @@ import {
 	AutoIncrement,
 	NotNull,
 } from "@sequelize/core/decorators-legacy";
-import IBook from "../shared/interfaces/book.interface";
+import { IBookCreation } from "../shared/interfaces/book.interface";
+import { bookUpdateProps, findBookFilters } from "../shared/types/book.type";
 
 export class Book
 	extends Model<InferAttributes<Book>, InferCreationAttributes<Book>>
-	implements IBook
+	implements IBookCreation
 {
 	@Attribute(DataTypes.INTEGER)
 	@PrimaryKey
@@ -30,7 +31,53 @@ export class Book
 	@NotNull
 	declare authorId: number;
 
-	declare createdAt: Date;
+	// model methods
+	static fetchAll() {
+		return this.findAll();
+	}
 
-	declare updatedAt: Date;
+	static fetchOne({ title, authorId }: findBookFilters) {
+		const whereClause: findBookFilters = {};
+
+		if (authorId) whereClause.authorId = authorId;
+		if (title) whereClause.title = title;
+		if (authorId) whereClause.authorId = authorId;
+
+		return this.findOne({ where: whereClause });
+	}
+
+	static updateBook(bookId: string, { title, authorId }: bookUpdateProps) {
+		const updateFields: bookUpdateProps = {};
+
+		if (title) updateFields.title = title;
+		if (authorId) updateFields.authorId = authorId;
+
+		return this.update(updateFields, {
+			where: {
+				bookId,
+			},
+		});
+	}
+
+	static deleteBook(authorId: string) {
+		return this.destroy({
+			where: {
+				authorId,
+			},
+		});
+	}
+
+	static async exists({
+		bookId,
+		title,
+		authorId,
+	}: findBookFilters): Promise<boolean> {
+		const whereClause: findBookFilters = {};
+
+		if (bookId) whereClause.bookId = bookId;
+		if (title) whereClause.title = title;
+		if (authorId) whereClause.authorId = authorId;
+
+		return (await this.count({ where: whereClause })) > 0;
+	}
 }

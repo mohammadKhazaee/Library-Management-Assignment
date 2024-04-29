@@ -10,6 +10,49 @@ exports.Book = void 0;
 const core_1 = require("@sequelize/core");
 const decorators_legacy_1 = require("@sequelize/core/decorators-legacy");
 class Book extends core_1.Model {
+    // model methods
+    static fetchAll() {
+        return this.findAll();
+    }
+    static fetchOne({ title, authorId }) {
+        const whereClause = {};
+        if (authorId)
+            whereClause.authorId = authorId;
+        if (title)
+            whereClause.title = title;
+        if (authorId)
+            whereClause.authorId = authorId;
+        return this.findOne({ where: whereClause });
+    }
+    static updateBook(bookId, { title, authorId }) {
+        const updateFields = {};
+        if (title)
+            updateFields.title = title;
+        if (authorId)
+            updateFields.authorId = authorId;
+        return this.update(updateFields, {
+            where: {
+                bookId,
+            },
+        });
+    }
+    static deleteBook(authorId) {
+        return this.destroy({
+            where: {
+                authorId,
+            },
+        });
+    }
+    static async exists({ bookId, title, authorId, }) {
+        const whereClause = {};
+        if (bookId)
+            whereClause.bookId = bookId;
+        if (title)
+            whereClause.title = title;
+        if (authorId)
+            whereClause.authorId = authorId;
+        return (await this.count({ where: whereClause })) > 0;
+    }
 }
 exports.Book = Book;
 __decorate([

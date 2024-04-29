@@ -11,5 +11,6 @@ class BaseValidator {
             throw err;
         }
     }
+    async validateCreate(createProps) { }
 }
 exports.default = BaseValidator;
