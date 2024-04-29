@@ -4,6 +4,7 @@ import {
 	updateValidator,
 } from "../../interfaces/validator.interface";
 import { idSchema } from "../../types/general.type";
+import { ValidationError } from "../errors/userFacingError";
 
 export default abstract class BaseValidator<C, U>
 	implements createValidator<C>, updateValidator<U>
@@ -13,7 +14,7 @@ export default abstract class BaseValidator<C, U>
 	async validateId(id: string): Promise<void | never> {
 		const result = idSchema.safeParse(+id);
 		if (!result.success) {
-			const err = new Error(fromZodError(result.error).message);
+			const err = new ValidationError(fromZodError(result.error).message);
 			throw err;
 		}
 	}

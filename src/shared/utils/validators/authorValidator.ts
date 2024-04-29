@@ -8,6 +8,7 @@ import {
 } from "../../types/author.type";
 import BaseValidator from "./baseValidator";
 import { Author } from "../../../models/author.model";
+import { NotFoundError, ValidationError } from "../errors/userFacingError";
 
 export default class AuthorValidator extends BaseValidator<
 	IAuthorCreation,
@@ -20,16 +21,14 @@ export default class AuthorValidator extends BaseValidator<
 	async validateCreate(authorProps: IAuthorCreation) {
 		const result = authorCreateSchema.safeParse(authorProps);
 		if (!result.success) {
-			const err = new Error(fromZodError(result.error).message);
-			throw err;
+			throw new ValidationError(fromZodError(result.error).message);
 		}
 	}
 
 	validateUpdate(updateProps: authorUpdateProps) {
 		const result = authorUpdateSchema.safeParse(updateProps);
 		if (!result.success) {
-			const err = new Error(fromZodError(result.error).message);
-			throw err;
+			throw new ValidationError(fromZodError(result.error).message);
 		}
 	}
 
@@ -37,8 +36,7 @@ export default class AuthorValidator extends BaseValidator<
 		super.validateId(id);
 		const exists = await Author.exists({ authorId: id });
 		if (!exists) {
-			const err = new Error("authorId doesnt exists in the library");
-			throw err;
+			throw new NotFoundError("authorId doesnt exists in the library");
 		}
 	}
 }

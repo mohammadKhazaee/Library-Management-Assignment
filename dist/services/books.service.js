@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const book_model_1 = require("../models/book.model");
+const throwError_1 = __importDefault(require("../shared/utils/errors/throwError"));
 //import module
 class BookService {
     constructor(validatorClass) {
@@ -10,7 +14,7 @@ class BookService {
                 return book_model_1.Book.fetchAll();
             }
             catch (err) {
-                throw err;
+                (0, throwError_1.default)(err);
             }
         };
         this.createBook = async (bookProps) => {
@@ -19,7 +23,7 @@ class BookService {
                 return await book_model_1.Book.create(bookProps);
             }
             catch (err) {
-                throw err;
+                (0, throwError_1.default)(err);
             }
         };
         this.getBook = async (bookId) => {
@@ -28,7 +32,7 @@ class BookService {
                 return await book_model_1.Book.fetchOne({ bookId });
             }
             catch (err) {
-                throw err;
+                (0, throwError_1.default)(err);
             }
         };
         this.updateBook = async (bookId, bookProps) => {
@@ -38,7 +42,7 @@ class BookService {
                 return await book_model_1.Book.updateBook(bookId, bookProps);
             }
             catch (err) {
-                throw err;
+                (0, throwError_1.default)(err);
             }
         };
         this.deleteBook = async (bookId) => {
@@ -47,7 +51,7 @@ class BookService {
                 return await book_model_1.Book.deleteBook(bookId);
             }
             catch (err) {
-                throw err;
+                (0, throwError_1.default)(err);
             }
         };
     }

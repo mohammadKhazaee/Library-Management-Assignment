@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const authors_1 = __importDefault(require("./authors"));
 const books_1 = __importDefault(require("./books"));
+const applicationError_1 = __importDefault(require("../shared/utils/errors/applicationError"));
 const router = (0, express_1.Router)();
 router.use("/authors", authors_1.default);
 router.use("/books", books_1.default);
@@ -13,11 +14,12 @@ router.use((req, res, next) => {
     res.status(404).json({ message: "Page not found." });
 });
 router.use((err, req, res, next) => {
-    // const status = err.statusCode || 500;
-    // if (err.statusCode === 500) {
-    // 	console.log(err);
-    // 	return res.status(status).json({ message: "something went wrong" });
-    // }
+    let status;
+    console.log(err);
+    if (err instanceof applicationError_1.default)
+        status = err.statusCode;
+    else
+        status = 500;
     res.status(500).json({ message: err.message });
 });
 exports.default = router;

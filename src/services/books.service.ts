@@ -2,6 +2,7 @@ import { IBookCreation } from "../shared/interfaces/book.interface";
 import { Book } from "../models/book.model";
 import { bookUpdateProps } from "../shared/types/book.type";
 import BaseValidator from "../shared/utils/validators/baseValidator";
+import throwError from "../shared/utils/errors/throwError";
 
 //import module
 export default class BookService {
@@ -13,7 +14,7 @@ export default class BookService {
 		try {
 			return Book.fetchAll();
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 
@@ -23,7 +24,7 @@ export default class BookService {
 
 			return await Book.create(bookProps);
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 
@@ -33,7 +34,7 @@ export default class BookService {
 
 			return await Book.fetchOne({ bookId });
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 
@@ -44,7 +45,7 @@ export default class BookService {
 
 			return await Book.updateBook(bookId, bookProps);
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 
@@ -54,7 +55,7 @@ export default class BookService {
 
 			return await Book.deleteBook(bookId);
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 }

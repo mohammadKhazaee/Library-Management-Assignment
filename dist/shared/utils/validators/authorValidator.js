@@ -7,6 +7,7 @@ const zod_validation_error_1 = require("zod-validation-error");
 const author_type_1 = require("../../types/author.type");
 const baseValidator_1 = __importDefault(require("./baseValidator"));
 const author_model_1 = require("../../../models/author.model");
+const userFacingError_1 = require("../errors/userFacingError");
 class AuthorValidator extends baseValidator_1.default {
     constructor() {
         super();
@@ -14,23 +15,20 @@ class AuthorValidator extends baseValidator_1.default {
     async validateCreate(authorProps) {
         const result = author_type_1.authorCreateSchema.safeParse(authorProps);
         if (!result.success) {
-            const err = new Error((0, zod_validation_error_1.fromZodError)(result.error).message);
-            throw err;
+            throw new userFacingError_1.ValidationError((0, zod_validation_error_1.fromZodError)(result.error).message);
         }
     }
     validateUpdate(updateProps) {
         const result = author_type_1.authorUpdateSchema.safeParse(updateProps);
         if (!result.success) {
-            const err = new Error((0, zod_validation_error_1.fromZodError)(result.error).message);
-            throw err;
+            throw new userFacingError_1.ValidationError((0, zod_validation_error_1.fromZodError)(result.error).message);
         }
     }
     async validateId(id) {
         super.validateId(id);
         const exists = await author_model_1.Author.exists({ authorId: id });
         if (!exists) {
-            const err = new Error("authorId doesnt exists in the library");
-            throw err;
+            throw new userFacingError_1.NotFoundError("authorId doesnt exists in the library");
         }
     }
 }

@@ -1,4 +1,4 @@
-import { fromZodError } from "zod-validation-error";
+import { ValidationError, fromZodError } from "zod-validation-error";
 
 import { IBookCreation } from "../../interfaces/book.interface";
 import {
@@ -9,6 +9,7 @@ import {
 import BaseValidator from "./baseValidator";
 import { Book } from "../../../models/book.model";
 import { Author } from "../../../models/author.model";
+import { ConflictError, NotFoundError } from "../errors/userFacingError";
 
 export default class BookValidator extends BaseValidator<
 	IBookCreation,
@@ -21,23 +22,21 @@ export default class BookValidator extends BaseValidator<
 	async validateCreate(bookProps: IBookCreation) {
 		const result = bookCreateSchema.safeParse(bookProps);
 		if (!result.success) {
-			const err = new Error(fromZodError(result.error).message);
-			throw err;
+			throw new ValidationError(fromZodError(result.error).message);
 		}
+
 		const exists = await Author.exists({
 			authorId: bookProps.authorId.toString(),
 		});
 		if (!exists) {
-			const err = new Error("authorId doesnt exists in the library");
-			throw err;
+			throw new ConflictError("authorId doesnt exists in the library");
 		}
 	}
 
 	validateUpdate(updateProps: bookUpdateProps) {
 		const result = bookUpdateSchema.safeParse(updateProps);
 		if (!result.success) {
-			const err = new Error(fromZodError(result.error).message);
-			throw err;
+			throw new ValidationError(fromZodError(result.error).message);
 		}
 	}
 
@@ -45,8 +44,7 @@ export default class BookValidator extends BaseValidator<
 		super.validateId(id);
 		const exists = await Book.exists({ bookId: id });
 		if (!exists) {
-			const err = new Error("bookId doesnt exists in the library");
-			throw err;
+			throw new NotFoundError("bookId doesnt exists in the library");
 		}
 	}
 }

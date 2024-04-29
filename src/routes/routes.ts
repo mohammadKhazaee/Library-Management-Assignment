@@ -2,6 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 
 import authorsRoutes from "./authors";
 import booksRoutes from "./books";
+import ApplicationError from "../shared/utils/errors/applicationError";
 
 const router = Router();
 
@@ -14,11 +15,12 @@ router.use((req, res, next) => {
 });
 
 router.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-	// const status = err.statusCode || 500;
-	// if (err.statusCode === 500) {
-	// 	console.log(err);
-	// 	return res.status(status).json({ message: "something went wrong" });
-	// }
+	let status: number;
+	console.log(err);
+
+	if (err instanceof ApplicationError) status = err.statusCode;
+	else status = 500;
+
 	res.status(500).json({ message: err.message });
 });
 

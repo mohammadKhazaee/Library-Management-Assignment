@@ -2,6 +2,7 @@ import { IAuthorCreation } from "../shared/interfaces/author.interface";
 import { Author } from "../models/author.model";
 import { authorUpdateProps } from "../shared/types/author.type";
 import BaseValidator from "../shared/utils/validators/baseValidator";
+import throwError from "../shared/utils/errors/throwError";
 
 //import module
 export default class AuthorService {
@@ -14,9 +15,9 @@ export default class AuthorService {
 
 	getAuthors = async () => {
 		try {
-			return Author.fetchAll();
+			return await Author.fetchAll();
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 
@@ -26,7 +27,7 @@ export default class AuthorService {
 
 			return await Author.create(authorProps);
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 
@@ -36,7 +37,7 @@ export default class AuthorService {
 
 			return await Author.fetchOne({ authorId });
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 
@@ -47,7 +48,7 @@ export default class AuthorService {
 
 			return await Author.updateAuthor(authorId, authorProps);
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 
@@ -57,7 +58,7 @@ export default class AuthorService {
 
 			return await Author.deleteAuthor(authorId);
 		} catch (err) {
-			throw err;
+			throwError(err);
 		}
 	};
 }
