@@ -29,7 +29,5 @@ app.use((req, res, next) => {
 app.use(routes);
 
 sequelize.sync({ force: true }).then((result) => {
-	// console.log(result);
-
 	app.listen(3000);
 });

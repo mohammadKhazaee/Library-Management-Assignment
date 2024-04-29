@@ -14,8 +14,6 @@ export const getBooks: RequestHandler = async (req, res, next) => {
 
 		res.status(200).json({ message: "success", books });
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
@@ -35,8 +33,6 @@ export const postBook: RequestHandler = async (req, res, next) => {
 			book: createdBookDoc,
 		});
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
@@ -53,8 +49,6 @@ export const getBook: RequestHandler = async (req, res, next) => {
 		if (!bookDoc) return next();
 		res.status(200).json({ message: "book fetched", book: bookDoc });
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
@@ -68,16 +62,12 @@ export const putBook: RequestHandler = async (req, res, next) => {
 		const bookValidator = new BookValidator();
 		const bookService = new BookService(bookValidator);
 
-		const result = await bookService.updateBook(bookId, bookProps);
-		console.log(result);
+		await bookService.updateBook(bookId, bookProps);
 
-		// if (!bookDoc) return next();
 		res.status(200).json({
 			message: "authoer updated",
 		});
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };
@@ -94,8 +84,6 @@ export const deleteBook: RequestHandler = async (req, res, next) => {
 		if (result === 0) return next();
 		res.status(200).json({ message: "book deleted" });
 	} catch (err) {
-		console.log(err);
-		// if (!err.statusCode) err.statusCode = 500;
 		next(err);
 	}
 };

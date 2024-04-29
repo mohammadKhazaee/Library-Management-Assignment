@@ -22,6 +22,5 @@ app.use((req, res, next) => {
 });
 app.use(routes_1.default);
 database_1.default.sync({ force: true }).then((result) => {
-    // console.log(result);
     app.listen(3000);
 });

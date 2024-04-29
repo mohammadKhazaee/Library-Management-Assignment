@@ -14,8 +14,6 @@ const getAuthors = async (req, res, next) => {
         res.status(200).json({ message: "success", authors });
     }
     catch (err) {
-        console.log(err);
-        // if (!err.statusCode) err.statusCode = 500;
         next(err);
     }
 };
@@ -33,8 +31,6 @@ const postAuthor = async (req, res, next) => {
         });
     }
     catch (err) {
-        console.log(err);
-        // if (!err.statusCode) err.statusCode = 500;
         next(err);
     }
 };
@@ -50,8 +46,6 @@ const getAuthor = async (req, res, next) => {
         res.status(200).json({ message: "author fetched", author: authorDoc });
     }
     catch (err) {
-        console.log(err);
-        // if (!err.statusCode) err.statusCode = 500;
         next(err);
     }
 };
@@ -63,16 +57,12 @@ const putAuthor = async (req, res, next) => {
         const authorProps = { firstName, lastName };
         const authorValidator = new authorValidator_1.default();
         const authorService = new authors_service_1.default(authorValidator);
-        const result = await authorService.updateAuthor(authorId, authorProps);
-        console.log(result);
-        // if (!authorDoc) return next();
+        await authorService.updateAuthor(authorId, authorProps);
         res.status(200).json({
             message: "authoer updated",
         });
     }
     catch (err) {
-        console.log(err);
-        // if (!err.statusCode) err.statusCode = 500;
         next(err);
     }
 };
@@ -88,8 +78,6 @@ const deleteAuthor = async (req, res, next) => {
         res.status(200).json({ message: "author deleted" });
     }
     catch (err) {
-        console.log(err);
-        // if (!err.statusCode) err.statusCode = 500;
         next(err);
     }
 };
