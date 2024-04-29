@@ -33,7 +33,8 @@ export default class AuthorValidator extends BaseValidator<
 	}
 
 	async validateId(id: string) {
-		super.validateId(id);
+		await super.validateId(id);
+
 		const exists = await Author.exists({ authorId: id });
 		if (!exists) {
 			throw new NotFoundError("authorId doesnt exists in the library");

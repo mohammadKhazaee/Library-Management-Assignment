@@ -59,7 +59,7 @@ const putAuthor = async (req, res, next) => {
         const authorService = new authors_service_1.default(authorValidator);
         await authorService.updateAuthor(authorId, authorProps);
         res.status(200).json({
-            message: "authoer updated",
+            message: "author updated",
         });
     }
     catch (err) {

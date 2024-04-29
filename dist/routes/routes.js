@@ -16,10 +16,11 @@ router.use((req, res, next) => {
 router.use((err, req, res, next) => {
     let status;
     console.log(err);
-    if (err instanceof applicationError_1.default)
+    if (err instanceof applicationError_1.default) {
         status = err.statusCode;
+    }
     else
         status = 500;
-    res.status(500).json({ message: err.message });
+    res.status(status).json({ message: err.message });
 });
 exports.default = router;

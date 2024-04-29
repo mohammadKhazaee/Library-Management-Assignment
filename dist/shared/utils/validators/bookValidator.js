@@ -32,7 +32,7 @@ class BookValidator extends baseValidator_1.default {
         }
     }
     async validateId(id) {
-        super.validateId(id);
+        await super.validateId(id);
         const exists = await book_model_1.Book.exists({ bookId: id });
         if (!exists) {
             throw new userFacingError_1.NotFoundError("bookId doesnt exists in the library");

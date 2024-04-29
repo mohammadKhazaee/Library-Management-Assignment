@@ -25,7 +25,7 @@ class AuthorValidator extends baseValidator_1.default {
         }
     }
     async validateId(id) {
-        super.validateId(id);
+        await super.validateId(id);
         const exists = await author_model_1.Author.exists({ authorId: id });
         if (!exists) {
             throw new userFacingError_1.NotFoundError("authorId doesnt exists in the library");

@@ -8,8 +8,7 @@ class BaseValidator {
     async validateId(id) {
         const result = general_type_1.idSchema.safeParse(+id);
         if (!result.success) {
-            const err = new userFacingError_1.ValidationError((0, zod_validation_error_1.fromZodError)(result.error).message);
-            throw err;
+            throw new userFacingError_1.ValidationError((0, zod_validation_error_1.fromZodError)(result.error).message);
         }
     }
     async validateCreate(createProps) { }

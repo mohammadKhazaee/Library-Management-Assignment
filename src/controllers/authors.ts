@@ -65,7 +65,7 @@ export const putAuthor: RequestHandler = async (req, res, next) => {
 		await authorService.updateAuthor(authorId, authorProps);
 
 		res.status(200).json({
-			message: "authoer updated",
+			message: "author updated",
 		});
 	} catch (err) {
 		next(err);

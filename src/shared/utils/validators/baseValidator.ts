@@ -14,8 +14,7 @@ export default abstract class BaseValidator<C, U>
 	async validateId(id: string): Promise<void | never> {
 		const result = idSchema.safeParse(+id);
 		if (!result.success) {
-			const err = new ValidationError(fromZodError(result.error).message);
-			throw err;
+			throw new ValidationError(fromZodError(result.error).message);
 		}
 	}
 
