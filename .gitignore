@@ -1,4 +1,5 @@
 node_modules
+dist/
 .env
 sass
 public/bower_components

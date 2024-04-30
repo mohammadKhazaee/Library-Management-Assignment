@@ -25,6 +25,7 @@
 		"helmet": "^7.1.0",
 		"sequelize": "^6.37.3",
 		"tozod": "^3.0.0",
+		"typescript": "^5.4.5",
 		"zod": "^3.23.4",
 		"zod-validation-error": "^3.2.0"
 	},

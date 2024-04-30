@@ -10,7 +10,7 @@ _A RESTful API built using Express.js framework._
 
 #### Requirements:
 
--   You must have mysql installed in your mechine and create a schema called "library_db".
+-   You must have mysql installed in your mechine
 
 #### `Step 1` - clone the repo
 
@@ -30,11 +30,36 @@ $ cd Library-Management-Assignment
 $ npm install
 ```
 
-#### `Step 3` - create .env file
+#### `Step 4` - create database connection and schema
 
-Find the database.ts file in src/shared/utils and fill env file with required environment variables and values of your own
+Create a mysql database connection with following properties
 
-#### `Step 4` - run application
+-   Hostname: localhost
+-   Port: 3306
+-   Username: root
+-   leave Password empty
+
+Create a schema in the connection named "library_db"
+
+#### `Step 5 (Optional)` - create .env file
+
+You can customize databse connection propeties and schema name by creating a .env file in the root directory and set these values proportional to your different values
+
+-   DB_NAME=library_db
+-   DB_USER=root
+-   DB_PASSWORD
+-   DB_HOST=localhost
+-   DB_PORT=3306
+
+values here are default values
+
+#### `Step 6` - run application
+
+```bash
+$ tsc
+```
+
+#### `Step 7` - run application
 
 ```bash
 $ npm start
