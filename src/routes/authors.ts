@@ -1,21 +1,55 @@
 import { Router } from "express";
-import { authorControllerFactory as controllerFactory } from "../controllers/authors";
+import {
+	AuthorController,
+	DeleteAuthorStrategy,
+	GetAuthorStrategy,
+	GetAuthorsStrategy,
+	PostAuthorStrategy,
+	PutAuthorStrategy,
+} from "../controllers/authors";
 
 const router = Router();
 
+const authorController = new AuthorController();
+
 // GET /authors
-router.get("/", controllerFactory("getAuthors"));
+router.get(
+	"/",
+	authorController
+		.setStrategy(new GetAuthorsStrategy())
+		.authorControllerFactory()
+);
 
 // POST /authors
-router.post("/", controllerFactory("postAuthor"));
+router.post(
+	"/",
+	authorController
+		.setStrategy(new PostAuthorStrategy())
+		.authorControllerFactory()
+);
 
 // GET /authors/:id
-router.get("/:id", controllerFactory("getAuthor"));
+router.get(
+	"/:id",
+	authorController
+		.setStrategy(new GetAuthorStrategy())
+		.authorControllerFactory()
+);
 
 // PUT /authors/:id
-router.put("/:id", controllerFactory("putAuthor"));
+router.put(
+	"/:id",
+	authorController
+		.setStrategy(new PutAuthorStrategy())
+		.authorControllerFactory()
+);
 
 // DELETE /authors/:id
-router.delete("/:id", controllerFactory("deleteAuthor"));
+router.delete(
+	"/:id",
+	authorController
+		.setStrategy(new DeleteAuthorStrategy())
+		.authorControllerFactory()
+);
 
 export default router;
