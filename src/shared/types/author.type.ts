@@ -18,3 +18,13 @@ export type authorUpdateProps = z.infer<typeof authorUpdateSchema>;
 export type findAuthorFilters = authorUpdateProps & {
 	authorId?: string;
 };
+
+const authorRoutes = {
+	getAuthors: "getAuthors",
+	postAuthor: "postAuthor",
+	getAuthor: "getAuthor",
+	putAuthor: "putAuthor",
+	deleteAuthor: "deleteAuthor",
+} as const;
+
+export type authorControllers = keyof typeof authorRoutes;

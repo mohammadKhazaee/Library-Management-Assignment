@@ -1,27 +1,21 @@
 import { Router } from "express";
-import {
-	deleteAuthor,
-	getAuthor,
-	getAuthors,
-	postAuthor,
-	putAuthor,
-} from "../controllers/authors";
+import { authorControllerFactory as controllerFactory } from "../controllers/authors";
 
 const router = Router();
 
 // GET /authors
-router.get("/", getAuthors);
+router.get("/", controllerFactory("getAuthors"));
 
 // POST /authors
-router.post("/", postAuthor);
+router.post("/", controllerFactory("postAuthor"));
 
 // GET /authors/:id
-router.get("/:id", getAuthor);
+router.get("/:id", controllerFactory("getAuthor"));
 
 // PUT /authors/:id
-router.put("/:id", putAuthor);
+router.put("/:id", controllerFactory("putAuthor"));
 
 // DELETE /authors/:id
-router.delete("/:id", deleteAuthor);
+router.delete("/:id", controllerFactory("deleteAuthor"));
 
 export default router;

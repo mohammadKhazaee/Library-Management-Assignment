@@ -4,6 +4,10 @@ import { authorUpdateProps } from "../shared/types/author.type";
 import BaseValidator from "../shared/utils/validators/baseValidator";
 import throwError from "../shared/utils/errors/throwError";
 
+// interface ServiceStrategy {
+// 	doAlgorithm(data: string[]): string[];
+// }
+
 //import module
 export default class AuthorService {
 	constructor(
